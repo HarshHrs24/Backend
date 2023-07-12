@@ -2,7 +2,7 @@ import express from 'express';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { UserModel } from '../models/Users.js';
-
+const jwtKey = "news";
 const router = express.Router();
 
 router.post('/register', async (req, res) => {
@@ -27,15 +27,15 @@ router.post('/login', async (req, res) => {
 
   const user = await UserModel.findOne({ username });
   if (!user) {
-    return res.json({ message: "User Doesn't Exist" });
+    return res.status(404).json({ message: "User Doesn't Exist" });
   }
 
   const match = await bcrypt.compare(password, user.password);
   if (!match) {
-    return res.json({ message: 'Invalid username or password' });
+    return res.status(401).json({ message: 'Incorrect Password' });
   }
 
-  const token = jwt.sign({ id: user._id }, 'secret');
+  const token = jwt.sign({ id: user._id }, jwtKey);
 
   res.json({ token, userId: user._id });
 });
