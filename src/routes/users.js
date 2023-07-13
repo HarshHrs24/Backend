@@ -5,8 +5,26 @@ import { UserModel } from '../models/Users.js';
 const jwtKey = "news";
 const router = express.Router();
 
+// router.post('/register', async (req, res) => {
+//   const { username, password } = req.body;
+
+//   const user = await UserModel.findOne({ username: username });
+
+//   if (user) {
+//     return res.json('User already exists');
+//   }
+
+//   const hashedPassword = await bcrypt.hash(password, 10);
+
+//   const newUser = new UserModel({ username, password: hashedPassword });
+//   await newUser.save();
+
+//   res.json('User Registered Successfully');
+// });
+// ...
+
 router.post('/register', async (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, name, phoneNumber } = req.body;
 
   const user = await UserModel.findOne({ username: username });
 
@@ -16,11 +34,14 @@ router.post('/register', async (req, res) => {
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  const newUser = new UserModel({ username, password: hashedPassword });
+  const newUser = new UserModel({ username, password: hashedPassword, name, phoneNumber });
   await newUser.save();
 
   res.json('User Registered Successfully');
 });
+
+// ...
+
 
 router.post('/login', async (req, res) => {
   const { username, password } = req.body;

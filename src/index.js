@@ -29,6 +29,7 @@ app.use('/auth', userRouter)
 mongoose.connect(`mongodb+srv://rohannsingh987:newsapp@cluster0.nyrk1k7.mongodb.net/?retryWrites=true&w=majority`)
 
 
+
 const port = 1234
 app.listen(port, ()=> console.log(`Server Running on ${port}`));
 
